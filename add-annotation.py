@@ -13,7 +13,7 @@ def has_annotation(filepath):
 def add_annotation(filepath):
 
     print(f"🟡 {filepath} is missing the VBA Language Annotation")
-    # Open the file in write mode and write the VBA annotation aftter the last line that starts with "Attribute "
+    # Open the file in write mode and write the VBA annotation after the last line that starts with "Attribute "
     with open(filepath, "r") as file:
         lines = file.readlines()
     insterted = False
