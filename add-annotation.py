@@ -21,7 +21,7 @@ def add_annotation(filepath):
         for line in lines:
             if insterted == False and (line.startswith("Attribute ") or line == "\n"):
                 file.write(f"{line}")
-                file.write("@Lang VBA\r\n")
+                file.write("'@Lang VBA\r\n")
                 insterted = True
             else:
                 file.write(f"{line}")
