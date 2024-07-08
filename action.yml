@@ -1,0 +1,44 @@
+name: Add VBA Language Annotation
+description: 'This action adds the VBA language annotation to all .bas files in the repo.'
+branding:
+  icon: "edit-3"
+  color: "green"
+inputs:
+  do-checkout:
+    description: 'Set to true in order to let the action perform the checkout for you (default = false).'
+    default: false    
+  do-push:
+    description: 'Set to true in order to let the action perform the checkout for you (default = false).'
+    default: false
+  bot-name:
+    description: 'Name of the bot that will perform the commit.'
+    default: 'github-actions[bot]'
+  bot-email:
+    description: 'Email of the bot that will perform the commit.'
+    default: '41898282+github-actions[bot]@users.noreply.github.com'
+runs:
+  using: "composite"
+  steps:
+  - name: Configure Git
+    run: |
+      git config --global core.autocrlf false
+      git config --global core.eol lf
+    shell: bash
+  - name: Checkout
+    if: ${{ inputs.do-checkout }}
+    uses: actions/checkout@v4
+  - name: Set up Python 3.10
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.10"
+  - name: Run script
+    run: |
+      python '${{ github.action_path }}/add-annotation.py'
+    shell: bash
+  - name: Push content
+    if: ${{ inputs.do-push }}
+    uses: stefanzweifel/git-auto-commit-action@v5
+    with:
+      commit_message: "AAdd VBA Language Annotation \n\nGitHub Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" # Defaults to "Apply automatic changes"
+      commit_user_name: ${{ inputs.bot-name }} # defaults to "github-actions[bot]"
+      commit_user_email: ${{ inputs.bot-email }} # defaults to "41898282+github-actions[bot]@users.noreply.github.com"  
