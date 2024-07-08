@@ -25,7 +25,7 @@ def add_annotation(filepath):
                 file.write(f"{line}\n")
     print(f"    🟢 {filepath} now has the VBA Language Annotation")
 
-def main(extensions):
+def main():
     repo_dir = "/home/runner/work/"
     files = [] 
     for root, _, filenames in os.walk(repo_dir):
