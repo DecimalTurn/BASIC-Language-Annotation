@@ -1,5 +1,5 @@
 name: Add VBA Language Annotation
-description: 'This action adds the VBA language annotation to all .bas files in the repo.'
+description: 'This action adds the VBA language annotation(''Lang VBA) to all .bas files in the repo.'
 branding:
   icon: "edit-3"
   color: "green"
