@@ -37,7 +37,7 @@ runs:
     shell: bash
   - name: Push content
     if: ${{ inputs.do-push }}
-    uses: stefanzweifel/git-auto-commit-action@v5
+    uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 #v5.0.1
     with:
       commit_message: "Add VBA Language Annotation \n\nGitHub Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" # Defaults to "Apply automatic changes"
       commit_user_name: ${{ inputs.bot-name }} # defaults to "github-actions[bot]"
