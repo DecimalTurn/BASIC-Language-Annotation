@@ -16,13 +16,13 @@ def add_annotation(filepath):
     # Open the file in write mode and write the VBA annotation aftter the last line that starts with "Attribute "
     with open(filepath, "r") as file:
         lines = file.readlines()
-    insterted = false
+    insterted = False
     with open(filepath, "w") as file:
         for line in lines:
-            if insterted == false and (line.startswith("Attribute ") or line == "\n"):
+            if insterted == False and (line.startswith("Attribute ") or line == "\n"):
                 file.write(f"{line}")
                 file.write("@Lang VBA\r\n")
-                insterted = true
+                insterted = True
             else:
                 file.write(f"{line}")
     print(f"    🟢 {filepath} now has the VBA Language Annotation")
