@@ -56,7 +56,7 @@ def has_attribute_vb_name(filepath):
 
 def get_line_ending(filepath):
     try:
-        with open(filepath, 'rb') as file:
+        with open(filepath, 'rb', newline='') as file:
             content = file.read()
         
         # Initialize variables to track line endings
@@ -141,7 +141,7 @@ def add_annotation(filepath, language):
     # Convert escape sequences in eol to their respective characters
     eol = re.sub(r'\\n', '\n', eol)
     eol = re.sub(r'\\r', '\r', eol)
-    with open(filepath, "r") as file:
+    with open(filepath, "r", newline='') as file:
         lines = file.readlines()
     inserted = False
     first_nonEmpty_encountered = False
@@ -175,7 +175,7 @@ def add_attribute(filepath):
     # Convert escape sequences in eol to their respective characters
     eol = re.sub(r'\\n', '\n', eol)
     eol = re.sub(r'\\r', '\r', eol)
-    with open(filepath, "r") as file:
+    with open(filepath, "r", newline='') as file:
         lines = file.readlines()
     module_name = os.path.basename(filepath).rsplit('.bas', 1)[0]
     first_line = True
