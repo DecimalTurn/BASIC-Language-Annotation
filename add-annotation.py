@@ -56,7 +56,7 @@ def has_attribute_vb_name(filepath):
 
 def get_line_ending(filepath):
     try:
-        with open(filepath, 'rb', newline='') as file:
+        with open(filepath, 'rb') as file:
             content = file.read()
         
         # Initialize variables to track line endings
