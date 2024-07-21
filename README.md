@@ -14,12 +14,13 @@ permissions:
   contents: write
 
 jobs:
-  run:
+  add-language-annotation:
     runs-on: ubuntu-latest
     steps:
     - name: Add BASIC language annotation
-      uses: DecimalTurn/BASIC-Language-Annotation@8779a917eb1e837318a15f895d5eede48dcb9c24 #v1.0.0
+      uses: DecimalTurn/BASIC-Language-Annotation@ecd0ad8ee06bf18822668504b5422b7c51299ba1 #v2.0.0
       with:
+        language: VBA
         do-checkout: true
         do-push: true
 ```
