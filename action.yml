@@ -48,3 +48,6 @@ runs:
       commit_message: "Add BASIC Language Annotation \n\nGitHub Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" # Defaults to "Apply automatic changes"
       commit_user_name: ${{ inputs.bot-name }} # defaults to "github-actions[bot]"
       commit_user_email: ${{ inputs.bot-email }} # defaults to "41898282+github-actions[bot]@users.noreply.github.com"  
+
+#TODO:
+# - Add option to autodetect encoding (https://github.com/jawah/charset_normalizer)
