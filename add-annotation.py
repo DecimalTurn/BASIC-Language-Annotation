@@ -2,9 +2,9 @@ import argparse
 import os
 import re
 
-def has_annotation(filepath):
+def has_annotation(filepath, encoding):
     # Open the file in read mode and check if one of the lines starts with the language annotation ('@Lang VBA or '@Lang("VBA") or '@Lang: VBA)
-    with open(filepath, "r") as file:
+    with open(filepath, "r", encoding=encoding) as file:
         for i, line in enumerate(file):
             if i >= 50:
                 break
