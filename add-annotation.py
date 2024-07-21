@@ -13,9 +13,9 @@ def has_annotation(filepath):
                 return True
     return False
 
-def has_attribute_vb_name(filepath):
+def has_attribute_vb_name(filepath, encoding):
     try:
-        with open(filepath, "r") as file:
+        with open(filepath, "r", encoding=encoding) as file:
             lines = file.readlines()
             
             # Flag to indicate whether we've started processing attributes
@@ -131,7 +131,7 @@ def parse_language(language_str):
     # Return a default value or raise an exception if the input is unknown
     return 'unknown'
 
-def add_annotation(filepath, language):
+def add_annotation(filepath, language, encoding):
 
     if language.lower().startswith("basic "):
         raise ValueError("Annotation for Classic BASIC isn't supported at the moment.")
@@ -141,11 +141,11 @@ def add_annotation(filepath, language):
     # Convert escape sequences in eol to their respective characters
     eol = re.sub(r'\\n', '\n', eol)
     eol = re.sub(r'\\r', '\r', eol)
-    with open(filepath, "r", newline='') as file:
+    with open(filepath, "r", newline='', encoding=encoding) as file:
         lines = file.readlines()
     inserted = False
     first_nonEmpty_encountered = False
-    with open(filepath, "w", newline='') as file:
+    with open(filepath, "w", newline='', encoding=encoding) as file:
         for line in lines:
             # We skip empty lines and lines that start with "Attribute " since these are metadata for VB Classic and VBA.
             if line.startswith("Attribute ") and not first_nonEmpty_encountered:
@@ -168,19 +168,19 @@ def add_annotation(filepath, language):
     print(f"    🟢 {filepath} now has the {language} Language Annotation")
 
 # This is a special addition for VBA/VB6 files.
-def add_attribute(filepath):
+def add_attribute(filepath, encoding):
 
     print(f"🟡 {filepath} is missing the Visual Basic Name Attribute")
     eol = get_line_ending(filepath)
     # Convert escape sequences in eol to their respective characters
     eol = re.sub(r'\\n', '\n', eol)
     eol = re.sub(r'\\r', '\r', eol)
-    with open(filepath, "r", newline='') as file:
+    with open(filepath, "r", newline='', encoding=encoding) as file:
         lines = file.readlines()
     module_name = os.path.basename(filepath).rsplit('.bas', 1)[0]
     first_line = True
     syntax_error = False
-    with open(filepath, "w", newline='') as file:
+    with open(filepath, "w", newline='', encoding=encoding) as file:
         for line in lines:
             # We skip empty lines and lines that start with "Attribute " since these are metadata for VB Classic and VBA.
             if first_line:
@@ -199,7 +199,7 @@ def add_attribute(filepath):
         print(f"    🟢 {filepath} now has the Visual Basic Name Attribute")
         return True
 
-def main(language):
+def main(language, encoding):
     repo_dir = "/home/runner/work/"
     files = [] 
     parsed_lang = parse_language(language)
@@ -210,15 +210,15 @@ def main(language):
                 files.append(filepath)
 
                 if parsed_lang == "vba" or parsed_lang == "vb6":
-                    has_attribute = has_attribute_vb_name(filepath)
+                    has_attribute = has_attribute_vb_name(filepath, encoding)
                     if not has_attribute:
-                        if not add_attribute(filepath):
+                        if not add_attribute(filepath, encoding):
                             print("======================================")
                             continue
 
-                annotation_result = has_annotation(filepath)
+                annotation_result = has_annotation(filepath, encoding)
                 if not annotation_result:
-                    add_annotation(filepath, language)
+                    add_annotation(filepath, language, encoding)
                 else:
                     print(f"🟢 {filepath} already has the {language} Langugage annotation.")
 
@@ -232,8 +232,9 @@ def main(language):
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Add BASIC language annotation.")
     parser.add_argument('language', type=str, help='Name of the language in the BASIC family')
+    parser.add_argument('encoding', type=str, help='Text Encoding used for files')
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse_arguments()
-    main(args.language)
+    main(args.language, args.encoding)
