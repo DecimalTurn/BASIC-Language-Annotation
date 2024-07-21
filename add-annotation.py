@@ -83,7 +83,7 @@ def get_line_ending(filepath):
             mixed_ending = True
         
         if mixed_ending:
-            raise ValueError("The file has mixed line endings.")
+            raise ValueError(f"The file {filepath} has mixed line endings. LF: {lf_count}; CRLF: {crlf_count}; CR: {cr_count} ")
         elif crlf_count > 0:
             return "\\r\\n"
         elif lf_count > 0:
