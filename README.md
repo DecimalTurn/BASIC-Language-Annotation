@@ -1,6 +1,8 @@
 A simple GitHub Action to add the BASIC language annotation (`'@Lang <Language>`) to .bas files in your repo.
 
 Example worflow:
+
+`Path: /.github/workflows/add-language-annotation.yml`
 ```yml
 name: Add BASIC language annotation
 
